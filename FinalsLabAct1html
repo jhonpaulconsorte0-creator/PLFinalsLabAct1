@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Codiva.io Fastest Cloud IDE</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <!--<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-78639523-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+-->
+  <!-- DO NOT MODIFY -->
+  <!-- Quora Pixel Code (JS Helper) -->
+  <!--
+<script>
+!function(q,e,v,n,t,s){if(q.qp) return; n=q.qp=function(){n.qp?n.qp.apply(n,arguments):n.queue.push(arguments);}; n.queue=[];t=document.createElement(e);t.async=!0;t.src=v; s=document.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);}(window, 'script', 'https://a.quora.com/qevents.js');
+qp('init', 'dbcba57ca71140dc917752bef65a7d96');
+qp('track', 'ViewContent');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://q.quora.com/_/ad/dbcba57ca71140dc917752bef65a7d96/pixel?tag=ViewContent&noscript=1"/></noscript>
+-->
+  <!-- End of Quora Pixel Code -->
+  <style rel="stylesheet" type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Helvetica", "Arial", "Verdana", sans-serif;
+    xheight: 100vh;
+  }
+
+  .hideElement {
+    display: none;
+  }
+
+  .mainContainer {
+    background-color: whitesmoke;
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .mainContainer:after {
+    clear: both;
+  }
+
+  .header .logo a {
+    color: #00bb44;
+  }
+
+  .header a,
+  .header form button {
+    text-decoration: none;
+    color: white;
+    padding: 0.5em 1em;
+    display: inline-block;
+  }
+
+  button {
+    font-size: 1em;
+    display: inline;
+  }
+
+  .button {
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+
+  .top-nav a:link,
+  .top-nav a:visited {
+    color: #b8cacb;
+    font-weight: 200;
+  }
+
+  .header {
+    padding: 0 10px;
+    height: 2em;
+    xbackground-color: #06065C;
+    background-color: #243342;
+    text-color: white;
+  }
+
+  .header ul {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .logo {
+    display: inline;
+    float: left;
+    font-family: "Heiti SC", "Verdana", sans-serif;
+  }
+
+  .top-nav {
+    display: inline;
+    float: left;
+  }
+
+  .top-nav ul {
+    list-style: none;
+  }
+
+  .top-nav li {
+    display: inline;
+  }
+
+  .top-nav a {
+    height: 2em;
+  }
+
+  .header .login-signup,
+  .header .new-project {
+    display: "inline";
+    float: right;
+  }
+
+  .header .login-signup li,
+  .header .new-project li {
+    display: inline;
+  }
+
+  .header .new-project li a {
+    xmargin-top: 0.75em;
+  }
+
+  .humanText {
+    max-width: 22em;
+    margin: auto;
+  }
+
+  .bg-orange {
+    background-color: #E56723;
+    color: white;
+  }
+
+  .bg-green {
+    background-color: #4CAF50;
+    /* Green */
+
+  }
+
+  .narrow-button {
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 2em;
+  }
+
+  .modalDialog {
+    xdisplay: none;
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+  }
+
+  .toolbar {
+    clear: both;
+    height: 3em;
+    background-color: #E9EEEF;
+  }
+
+  .toolbar ul {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 700px;
+  }
+
+  .toolbar li {
+    display: inline;
+  }
+
+  .toolbar input[type=checkbox],
+  #consoletoggle {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .toolbar a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .toolbar a:hover {
+    -webkit-transform: translateY(-1px);
+    transform: translateY(-1px);
+  }
+
+  .toolbar #projecttitle {
+    font-style: italic;
+    font-weight: bold;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .toolbar #projecttitletoggle~.projectdetails-div {
+    visibility: hidden;
+    position: absolute;
+    height: 0;
+    z-index: 20;
+    background-color: #E9EEEF;
+    transition: height 0.1s ease-in;
+  }
+
+  .toolbar #projecttitletoggle:checked~.projectdetails-div {
+    visibility: visible;
+    height: 20em;
+    transition: height 0.1s ease-in;
+  }
+
+  .toolbar #projecttitletoggle~.projectdetails-div~label {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 19;
+    visibility: hidden;
+  }
+
+  .toolbar #projecttitletoggle:checked~.projectdetails-div~label {
+    visibility: visible;
+  }
+
+  .toolbar .filestoggleli {
+    text-align: center;
+  }
+
+  .toolbar #fileexplorertoggle+label {
+    padding: 0.3em;
+  }
+
+  .toolbar #fileexplorertoggle+label::before {
+    font-family: FontAwesome;
+    content: '\f07b';
+    margin-right: .5em;
+    display: inline-block;
+  }
+
+  .toolbar #fileexplorertoggle:focus+label {
+    border: 2px solid lightblue;
+    box-shadow: 1 3px blue;
+  }
+
+  .toolbar #fileexplorertoggle:checked+label {}
+
+  .toolbar #fileexplorertoggle:checked+label::before {
+    content: '\f07c';
+  }
+
+  .toolbar #sharetoggle+label {
+    padding: 0.3em;
+  }
+
+  .toolbar #sharetoggle+label::before {
+    font-family: FontAwesome;
+    content: '\f1e0';
+    margin-right: .5em;
+    display: inline-block;
+  }
+
+  .toolbar #sharetoggle+label {
+    -webkit-transform: translateY(-1px);
+    transform: translateY(-1px);
+  }
+
+  .toolbar #sharetoggle:checked+label::before {
+    content: '\f023';
+  }
+
+  .toolbar button {
+    font-size: 1em;
+    padding: 0.25em;
+    border: none;
+    background: none;
+  }
+
+  .toolbar button:hover {
+    -webkit-transform: translateY(-1px);
+    transform: translateY(-1px);
+  }
+
+  .toolbar ul li div,
+  .toolbar ul li button {
+    margin: 1em 0;
+  }
+
+  .toolbar .spacer {
+    max-width: 1em;
+  }
+
+  #run {
+    border: solid 1px;
+    border-radius: 4px;
+    xbackground-color: green;
+    xcolor: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  }
+
+  #run:active {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+    -webkit-transform: translateY(1px);
+    transform: translateY(1px);
+  }
+
+  .icon::before {
+    display: inline-block;
+    margin-right: .5em;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+  }
+
+  .link {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  #fileexplorer {
+    height: 65vh;
+    max-height: calc(90vh - 5em);
+    position: relative;
+    xmax-width: 350px;
+    xflex: 1 1 30%;
+    white-space: nowrap;
+    z-index: 10;
+  }
+
+  .show-fileexplorer {
+    max-width: 350px;
+    width: 300px;
+    flex: 1 1 30%;
+    min-height: 100px;
+    overflow-x: auto;
+    overflow-y: scroll;
+    padding: 0.25em;
+  }
+
+  .hide-fileexplorer {
+    max-width: 0px;
+    width: 0px;
+    flex: 1 1 30%;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .edit-desc {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: none;
+    height: 2.5em;
+    width: 4em;
+    font-size: large;
+    background: transparent;
+  }
+
+  #workbench {
+    height: 65vh;
+    min-width: 320px;
+    xwidth: 70%;
+    xmax-width: 100%;
+    xheight: calc(65vh - 0.5em);
+    max-height: calc(90vh - 5.5em);
+    flex: 3 0 calc(60% - 0.5em);
+    transition: width ease-in 0.05s, position ease-in 0.05s;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    margin: 0.25em;
+  }
+
+  #console {
+    xbackground-color: green;
+    xmax-height: 300px;
+    height: calc(35vh - 5em);
+    min-height: 10vh;
+    min-width: 10px;
+    flex: 1 0 100%;
+    z-index: 20;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  #console #console_tabs_ul #console_tab_intro {
+    display: none;
+    max-width: 100%;
+  }
+
+  #console #console_tabs_ul #console_tab_intro:only-child {
+    display: block;
+  }
+
+  #console .tab-content {
+    height: 90%;
+    overflow-y: scroll;
+    font-family: monospace;
+    background-color: white;
+    color: black;
+  }
+
+  #filesReminder {
+    display: none;
+  }
+
+  #console .consoleReminder {
+    color: red;
+    border-bottom: gray solid 1px;
+  }
+
+  #console .tab-content .consoleReminder a {
+    color: red;
+    text-decoration: none;
+  }
+
+  #console .tab-content pre {
+    min-height: calc(100% - 2em);
+    border-bottom: solid lightgray 2px;
+  }
+
+  #console .console-input-div {
+    position: relative;
+    width: calc(100vw - 3em);
+    bottom: 2px;
+    left: 6px;
+  }
+
+  #consoletoggle+label {
+    display: none;
+  }
+
+  #workbench .CodeMirror {
+    height: calc(65vh - 5em);
+  }
+
+  .newJavaTab {
+    display: none;
+  }
+
+  .div-newFileForm {
+    width: 90%;
+    max-width: 400px;
+    display: inline-block;
+    padding: 5px 20px 13px 20px;
+  }
+
+  #tab-content-newTab .CodeMirror {
+    overflow: scroll;
+  }
+
+  #newFileForm button {
+    border: 1px solid;
+    display: block;
+    margin: auto;
+  }
+
+  #newFileForm li {
+    border: 1px solid;
+  }
+
+  #newFileForm ul {
+    max-width: 100%;
+    margin: 1em auto;
+  }
+
+  div.CodeMirror span.CodeMirror-matchingbracket {
+    color: inherit !important;
+    padding-bottom: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    width: fit-content;
+  }
+
+  .resizer {
+    position: absolute;
+    /* resizer is positioned in the console. 
+    Placing it right above the console. */
+    top: -10px;
+
+    /* Size */
+    height: 10px;
+    width: 100%;
+    /* To tell the user they can use it to resize */
+    cursor: ns-resize;
+    /* Stay on top */
+    z-index: 30;
+  }
+
+  @media all and (max-height: 700px) {
+
+    #workbench,
+    #fileexplorer {
+      height: calc(90vh - 5em);
+    }
+
+    #workbench .CodeMirror {
+      height: calc(90vh - 10em);
+    }
+
+    #console {
+      height: 10vh;
+    }
+
+    #console .tab-content {
+      height: calc(10vh - 1em);
+    }
+
+    #consoletoggle:checked+label {
+      bottom: 70vh;
+      opacity: 0.8;
+    }
+
+    #consoletoggle:checked+label+#console {
+      height: 70vh;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    #consoletoggle:checked+label+#console .tab-content {
+      height: calc(70vh - 1em);
+    }
+
+    #consoletoggle:not(:checked)+label+#console .console-input-div {
+      display: none;
+    }
+
+    #consoletoggle+label {
+      display: inline;
+      background-color: lightgray;
+      width: 100%;
+      height: 10vh;
+      position: absolute;
+      z-index: 30;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      color: orangered;
+      text-align: center;
+      padding: 1em;
+      font-size: larger;
+    }
+
+    .resizer {
+      display: none;
+    }
+
+  }
+
+  @media all and (min-height: 1000px) {
+
+    #workbench,
+    #fileexplorer {
+      height: calc(70vh - 5em);
+    }
+
+    #workbench .CodeMirror {
+      height: calc(70vh - 10em);
+    }
+
+    #console {
+      height: 30vh;
+    }
+
+    #console .tab-content {
+      height: calc(30vh - 1em);
+    }
+  }
+
+  @media all and (max-width: 1000px) {
+    #fileexplorer {
+      xwidth: 0px;
+      xmax-width: 0px;
+      flex: 1 0 300px;
+      position: absolute;
+      transition: width ease-in 0.05s;
+    }
+
+    #console {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+
+  @media all and (max-width: 650px) {
+    .header {
+      padding: 0px;
+    }
+
+    .top-nav {
+      display: none;
+    }
+
+    .screenshot,
+    .explain {
+      float: none;
+      width: 95%;
+      height: auto;
+      padding-top: 1em;
+      margin: auto;
+    }
+
+    .screenshot img {
+      max-width: 100%;
+      margin: auto;
+      display: block;
+    }
+
+    .narrow-button {
+      border-radius: 0px;
+    }
+  }
+
+  @media all and (max-width: 340px) {
+    .logo {
+      display: none;
+    }
+  }
+  </style>
+  <script>
+    dataLayer = [];
+</script>
+</head>
+
+<body>
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5X2FK9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5X2FK9');</script>
+  <!-- End Google Tag Manager -->
+  <link rel="preconnect" href="//cdnjs.cloudflare.com" crossorigin>
+  <!-- enable these to use CDN socket.io files -->
+  <script>
+    function connectSocketIO() {
+  var projectId;
+  
+  if (window.location.pathname.split( '/' ).length >= 2) {
+    projectId = window.location.pathname.split( '/' )[2];
+    console.log("ProjectId from window location : " + projectId);
+
+    //console.log(io);
+    console.log(typeof io);
+    console.log(typeof io !== 'undefined');
+    if (typeof io !== 'undefined') {
+      console.log(' the variable io is defined');
+      var socket = io.connect({ query: "projectId=" + projectId });
+      globalSocket = socket;
+    }
+  }
+  
+}
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" async defer onload="console.log('Socket.io loaded');connectSocketIO();"></script>
+  <!-- Code mirror files start -->
+  <!-- enable these to use CDN codemirror files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/clike/clike.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/mode/python/python.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/lint/lint.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/edit/closebrackets.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/edit/matchbrackets.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/selection/active-line.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/lint/lint.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/hint/show-hint.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/hint/show-hint.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.39.2/addon/runmode/runmode.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" defer></script>
+  <script src="/js/trie.min.js" defer></script>
+  <!--<script async src="/js/autocomplete.js"></script>-->
+  <!-- Code mirror files end -->
+  <script src="/js/base.js" async defer></script>
+  <script src="/js/folderTree.js" async defer></script>
+  <script src="/js/tabbedPane.js" async defer></script>
+  <header id="header" class="header">
+    <span class="logo">
+      <a href="/">Codiva.io</a>
+    </span>
+    <!-- Handle mobile menu bar -->
+    <nav class="top-nav">
+      <ul>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/profile">My Projects</a></li>
+        <li><a href="/tutorials">Tutorials</a></li>
+      </ul>
+    </nav>
+    
+    <!-- logedin -->
+    <div class="new-project">
+      <ul>
+        <li>
+          <form id="newProjectForm" action="/p/" method="POST">
+            <input type="hidden" name="projectName" value="Untitiled" />
+            <button id="newProjectFastSubmit" type="submit" class="narrow-button bg-green">New Project</button>
+          </form>
+        </li>
+        <!--<li><a id="newProjectLink" href="#" class="narrow-button bg-green">New Project</a></li>-->
+      </ul>
+    </div>
+    
+  </header>
+  <div class="toolbar">
+    <ul>
+      <li class="title">
+        <div id="projecttitle">
+          LabAct1Finals
+        </div>
+      </li>
+      <li class="filestoggleli">
+        <div>
+          <input type="checkbox" id="fileexplorertoggle" />
+          <label for="fileexplorertoggle">Files</label>
+        </div>
+      </li>
+      
+      
+      <li>
+        
+        <input type="checkbox" id="sharetoggle" checked />
+        <label for="sharetoggle" id="sharetogglelabel">Unshare</label>
+        
+        
+      </li>
+      
+      
+      <li>
+        <button id="run" class="icon fa-play-circle">Run</button>
+      </li>
+      
+    </ul>
+  </div>
+  <div class="mainContainer">
+    <div id="fileexplorer" class="hide-fileexplorer">
+      <div id="folderTree" class="folder-tree">
+        <div>
+          <!-- required_placeholder -->
+        </div>
+      </div>
+      
+      
+    </div>
+    <div id="workbench">
+      <div id="tabbed_pane">
+        <ul id="tabbed_pane_ul" class="tabs">
+          
+          <li class="newTab">
+            <input type="radio" name="tabs" class="tab-radio" checked="true" id="tab-newTab">
+            <label for="tab-newTab" title="New File" id="label-newTab"><i class="fa fa-plus"></i></label>
+            <div id="tab-content-newTab" class="tab-content">
+              <div class="CodeMirror cm-s-default">
+                <div class="div-newFileForm">
+                  <form id="newFileForm" class="infieldTopAlignedForm" onsubmit="return false;">
+                    <p id="newFileInstruction">Create new file with extn .c for C, .cc for C++, .java for Java or .py for Python </p>
+                    <ul>
+                      <li class="full">
+                        <label class="textLabels" id="label-fileName" for="text-fileName">Class / File Name : </label>
+                        <input class="textInput" id="text-fileName" type="text">
+                        <datalist id="exampleFileNameList">
+                          <option value="HelloCodiva.java" />
+                        </datalist>
+                      </li>
+                      <li class="full" style="display: none">
+                        <label class="textLabels" id="label-moduleName" for="text-moduleName">Module Name : </label>
+                        <input class="textInput" id="text-moduleName" type="text" list="moduleNameList">
+                        <datalist id="moduleNameList">
+                          <option value="example" />
+                          <option value="codiva" />
+                          <option value="main" />
+                        </datalist>
+                      </li>
+                      <li class="full" style="display: none">
+                        <label class="textLabels" id="label-packageName" for="text-packageName">Package Name : </label>
+                        <input class="textInput" id="text-packageName" type="text" list="packageNameList">
+                        <datalist id="packageNameList">
+                          <option value="com.example" />
+                          <option value="io.codiva" />
+                        </datalist>
+                      </li>
+                      <li class="full">
+                        <label class="textLabels" id="label-directory" for="text-directory">Directory : </label>
+                        <input class="textInput" id="text-directory" type="text" list="directoryList" value="src/">
+                        <datalist id="directoryList">
+                          <option value="src/">
+                          </option>
+                        </datalist>
+                      </li>
+                    </ul>
+                    <button type="submit" value="Create">Create</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </li>
+          
+      </div>
+    </div>
+    <input type='checkbox' id="consoletoggle" />
+    <label for="consoletoggle">Slide</label>
+    <div id="console" tabindex="0">
+      <div class="resizer" id="dragMe"></div>
+      <p></p>
+      <ul id="console_tabs_ul" class="tabs">
+        <li id="console_tab_intro">
+          <label for="run" id="runReminder" class="consoleReminder">Click 'Run' to run this program.</label>
+          <p id="filesReminder" class="consoleReminder">Check Files explorer to see all files.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="signinModal" class="modalDialog">
+    <div class="signin">
+      <a href="#" title="Close" class="close">Close</a>
+      <h2>Codiva.io</h2>
+      <div class="humanText">Signin</div>
+      <div id="signinContainer">
+        <div>
+          <form id="loginForm" class="infieldTopAlignedForm" action="/login" method="post">
+            <ul>
+              <li class="full">
+                <input id="login-email" type="email" name="email" />
+                <label for="login-email">Email</label>
+              </li>
+              <li class="full">
+                <input id="login-password" type="password" name="password" />
+                <label for="login-password">Password</label>
+              </li>
+            </ul>
+            <button type="submit" class="button bg-green" id="loginSubmit">Login</button>
+          </form>
+        </div>
+      </div>
+      <a id="registerFallback" href="#registerModal" class="fallback">
+        <p class="humanText">Don't have an account? Register here.</p>
+      </a>
+      <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+    </div>
+  </div>
+  <div id="registerModal" class="modalDialog">
+    <div class="register">
+      <a href="#" title="Close" class="close">Close</a>
+      <h2>Codiva.io</h2>
+      <div class="humanText">Create your free account to save your project.</div>
+      <div id="registerContainer">
+        <div>
+          <form id="registerForm" class="infieldTopAlignedForm" action="/signup" method="post">
+            <ul>
+              <li class="full">
+                <input id="register-email" type="email" name="email" />
+                <label for="register-email">Email</label>
+              </li>
+              <li class="half">
+                <input id="register-password" type="password" name="password" />
+                <label for="register-password">Password</label>
+              </li>
+              <li class="half">
+                <input id="register-confirm-password" type="password" name="confirm_password" />
+                <label for="register-confirm-password">Confirm Password</label>
+              </li>
+            </ul>
+            
+            <button type="submit" class="button bg-orange" id="registerSubmit">Create Account</button>
+          </form>
+        </div>
+      </div>
+      <a id="signinFallback" href="#signinModal" class="fallback">
+        <p class="humanText">Already have an account? Sign in here.</p>
+      </a>
+      <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+    </div>
+  </div>
+  <!-- Load the Content Experiment JavaScript API client for the experiment -->
+  <!--
+<script src="//www.google-analytics.com/cx/api.js?experiment=1_lrllKyRNy8jc82_1l3ow"></script>
+
+<script>
+  // Ask Google Analytics which variation to show the user.
+  var chosenVariation = cxApi.chooseVariation();
+</script>
+
+<script>
+// Define JavaScript for each page variation of this experiment.
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("chosenVariation: " + chosenVariation);
+  if (chosenVariation === 0) {
+    console.log('Original');
+    
+  } else if (chosenVariation === 1) {
+    console.log('Showing fileexample');
+    document.getElementById('text-fileName').setAttribute("list", "exampleFileNameList");
+  }
+   
+});
+</script>
+-->
+  <script>
+  var cb = function() {
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = '/css/project.css';
+    var h = document.getElementsByTagName('head')[0];
+    h.parentNode.insertBefore(l, h);
+
+    l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = '/css/modal.css';
+    h = document.getElementsByTagName('head')[0];
+    h.parentNode.insertBefore(l, h);
+
+  };
+  var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+    webkitRequestAnimationFrame || msRequestAnimationFrame;
+  if (raf) raf(cb);
+  else window.addEventListener('load', cb);
+  </script>
+  <script>
+  function clickHandlerSetFocus(modalDialogId, focusedElementId) {
+    var textBox = document.getElementById(focusedElementId);
+    var modalDialog = document.getElementById(modalDialogId);
+
+    var opacity = window.getComputedStyle(modalDialog).getPropertyValue("opacity");
+    console.log(opacity);
+    if (textBox && opacity > 0.05) {
+      textBox.focus();
+      return true;
+    } else {
+      setTimeout(function() { clickHandlerSetFocus(modalDialogId, focusedElementId) }, 100);
+    }
+    return true;
+  }
+
+  function addHandlerToSetFocus(linkId, modalDialogId, focusedElementId) {
+    var link = document.getElementById(linkId);
+    if (!link) {
+      return;
+    }
+
+    link.onclick = clickHandlerSetFocus.bind(this, modalDialogId, focusedElementId);
+  }
+
+  addHandlerToSetFocus("registerLink", "registerModal", "register-email");
+  addHandlerToSetFocus("registerFallback", "registerModal", "register-email");
+  addHandlerToSetFocus("signinLink", "signinModal", "login-email");
+  addHandlerToSetFocus("signinFallback", "signinModal", "login-email");
+  </script>
+  <script type="text/javascript">
+  var fileexplorertoggle = document.getElementById('fileexplorertoggle');
+  fileexplorertoggle.onchange = function() {
+    if (fileexplorertoggle.checked) {
+      document.getElementById("fileexplorer").className += " show-fileexplorer";
+      document.getElementById("fileexplorer").className =
+        document.getElementById("fileexplorer").className.replace(/(?:^|\s)hide-fileexplorer(?!\S)/g, '');
+    } else {
+      document.getElementById("fileexplorer").className =
+        document.getElementById("fileexplorer").className.replace(/(?:^|\s)show-fileexplorer(?!\S)/g, '');
+      document.getElementById("fileexplorer").className += " hide-fileexplorer";
+
+    }
+    fileexplorertoggle.blur();
+  }
+
+  var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  console.log('viewportWidth : ' + viewportWidth);
+  console.log('viewportHeight : ' + viewportHeight);
+  if (viewportWidth > 1000) {
+    fileexplorertoggle.checked = true;
+    fileexplorertoggle.onchange();
+  }
+  </script>
+  <script>
+  var globalSocket;
+  var handlers;
+  var model;
+  var prevDiagnostics = undefined;
+
+  function loadJavaScriptAsync(url) {
+    var elm = document.createElement("script");
+    elm.setAttribute("type", "text/javascript");
+    elm.setAttribute("async", "");
+    elm.src = url;
+    document.body.appendChild(elm);
+  }
+
+  function escapeHtml(html) {
+    var text = document.createTextNode(html);
+    var div = document.createElement('div');
+    div.appendChild(text);
+    return div.innerHTML;
+  }
+
+  function toast(text) {
+    var toastSwitch = document.getElementById("toastSwitch");
+    if (!toastSwitch) {
+      document.getElementById("header").innerHTML += `<input type="checkbox"  id="toastSwitch"/>
+        <div id="toastMessage" class="toastMessage"></div>`;
+    }
+    document.getElementById("toastMessage").textContent = text;
+    document.getElementById("toastSwitch").checked = true;
+    setTimeout(function() {
+      document.getElementById("toastSwitch").checked = false;
+    }, 2000);
+  }
+
+  function onDOMContentLoaded() {
+    console.log("DOMContentLoaded");
+    
+    
+    var projectId;
+    if (window.location.pathname.split('/').length >= 2) {
+      projectId = window.location.pathname.split('/')[2];
+      console.log("ProjectId from window location : " + projectId);
+      console.log(typeof io);
+      console.log(typeof io !== 'undefined');
+      if (typeof io !== 'undefined') {
+        console.log(' the variable io is defined');
+        //var socket = io.connect({ query: "projectId=" + projectId });
+        //globalSocket = socket;
+      }
+    }
+    
+  }
+
+  function onLoad() {
+    console.log('onLoad');
+    console.log(typeof io);
+    
+    var lastRunId = undefined;
+    handlers = {};
+    handlers.ready = false;
+    model = {};
+    model.ready = false;
+
+    var folderData = {"subFolders":[{"displayName":"src"}],"displayName":"LabAct1Finals"};
+    var tabbedPane = new this.tabbedPane.TabbedPane("tabbed_pane_ul", handlers, false);
+    var folderTree = new this.folderTree.FolderTree("folderTree", tabbedPane, handlers, false, true);
+    folderTree.refresh(folderData);
+    var base = new this.base.Base(tabbedPane, handlers, false);
+
+    var projectId;
+    if (window.location.pathname.split('/').length >= 2) {
+      projectId = window.location.pathname.split('/')[2];
+      console.log("ProjectId from window location : " + projectId);
+    }
+    if (projectId === undefined || projectId === "") {
+      projectId = "b3ea32ca-bdc1-4f16-a104-99a7e40046e6";
+      history.replaceState({}, "", "/p/" + projectId);
+      console.log("ProjectId from server : " + projectId);
+    }
+    
+    var socket = globalSocket;
+    if (!socket) {
+      console.log("Socket is not connected");
+      socket = io.connect({ query: "projectId=" + projectId });
+      globalSocket = socket;
+    }
+    socket.emit('hello', { my: 'data' });
+    
+    var onFilesTreeFunction = function(data) {
+      console.log('Received files-tree : ');
+      console.log(data);
+      folderTree.refresh(data);
+      model.updateFilesTree(data);
+      if (tabbedPane.nextTabId === 0) {
+        var openedTabsCount = 0;
+
+        function openTab(basePath, dirInfo, dryRun) {
+          if (basePath !== '~' && !basePath.startsWith('~/src')) {
+            console.log('Skipping basepath: ' + basePath);
+            return;
+          }
+          for (var d in dirInfo.subFolders) {
+            var subDir = dirInfo.subFolders[d];
+            openTab(basePath + "/" + subDir.displayName, subDir, dryRun);
+          }
+          for (var f in dirInfo.files) {
+            if (openedTabsCount > 5) {
+              console.log('Too many files to open. Stopping...');
+              document.getElementById('runReminder').style.display = "none";
+              document.getElementById('filesReminder').style.display = "block";
+              document.getElementById('fileexplorertoggle').checked = true;
+              document.getElementById('fileexplorertoggle').onchange();
+              break;
+            }
+            var file = dirInfo.files[f];
+            console.log(file);
+            var fileName = file.displayName;
+            if ((fileName === 'module-info.java') || !(fileName.endsWith('.java') || fileName.endsWith('.cc') || fileName.endsWith('.cpp') || fileName.endsWith('.h') || fileName.endsWith('.C') || fileName.endsWith('.c') || fileName.endsWith('.py'))) {
+              console.log('File skipped : ' + basePath + "/" + file.displayName);
+              continue;
+            }
+            console.log('File to be opened : ' + basePath + "/" + file.displayName);
+
+            var type = "filled by tabbedPane";
+            console.log('fileName: ' + fileName);
+            if (!dryRun) {
+              tabbedPane.newTab(type, fileName, basePath + "/" + fileName, '');
+            }
+            openedTabsCount++;
+            if (!dryRun) {
+              handlers.onFileOpened(basePath + "/" + fileName);
+            }
+          }
+        }
+        // Fix this later with proper ui
+        //openTab('~', data, true);
+        if (openedTabsCount <= 5) {
+          openedTabsCount = 0;
+          openTab('~', data, false);
+        } else {
+          openedTabsCount = 0;
+        }
+      }
+    };
+
+    socket.on('files-tree', onFilesTreeFunction);
+
+    socket.on('file-contents', function(data) {
+      console.log(data);
+      if (tabbedPane.editors[data.fileName]) {
+        tabbedPane.editors[data.fileName].setValue(data.contents);
+      }
+    });
+    socket.on('delete-result', function(data) {
+      console.log(data);
+      if (data.status === "failure" || data.status === "error") {
+        return;
+      }
+      if (!data.fileName) {
+        return;
+      }
+      if (data.fileName.startsWith("~/src/") || data.fileName.startsWith("~/test/")) {
+        toast("File moved to .trash folder.");
+      }
+      if (tabbedPane.editors[data.fileName]) {
+        console.log("Closing old tab " + data.fileName);
+        tabbedPane.closeTab(data.fileName);
+        folderTree.removeFile(data.fileName);
+      }
+    });
+    socket.on('rename-result', function(data) {
+      console.log(data);
+      if (data.status === "failure") {
+        return;
+      }
+      if (tabbedPane.editors[data.oldFileName]) {
+        //tabbedPane.editors[data.fileName].setValue(data.contents);
+        console.log("Closing old tab " + data.oldFileName);
+        tabbedPane.closeTab(data.oldFileName);
+
+      }
+
+      if (!tabbedPane.editors[data.newFileName]) {
+        var fileName = data.newFileName.split("/").pop();
+        var type = "filled by newTab()"
+        tabbedPane.newTab(type, fileName, data.newFileName, '');
+        handlers.onFileOpened(data.newFileName);
+        var basePath = data.newFileName.substring(0, data.newFileName.lastIndexOf("/"));
+        folderTree.replaceFile(basePath, fileName, data.oldFileId);
+      }
+    });
+
+    socket.on('compilation-result', function(data) {
+      var timeStamp = Math.floor(Date.now());
+      console.log('Received compilation-result timestamp : ' + timeStamp);
+      tabbedPane.clearAllCompilationErrorMarkers();
+      console.log(data);
+      var preElement = document.getElementById("tab-content-console-pre-compilation-results");
+      if (preElement) {
+        preElement.textContent = "";
+      }
+      if (data.fullText !== "") {
+        //var preElement = document.getElementById("tab-content-console-pre-compilation-results");
+        if (!preElement) {
+
+          var str = `<li class="console-tab">
+            <input type="radio" class="tab-radio" name="console-tabs" id="tab-console-compilation-results" checked/>
+            <label for="tab-console-compilation-results">Compilation Result</label>
+            <div class="tab-content" id="tab-content-console-compilation-results">
+              <pre id="tab-content-console-pre-compilation-results"></pre>
+            </div>
+
+          </li>`;
+
+          //document.getElementById("tab-content-console-pre1").textContent = str;
+          var consoleTabs = document.getElementById("console_tabs_ul");
+          var items = consoleTabs.getElementsByTagName('li');
+          if (items.length >= 5) {
+            consoleTabs.removeChild(items[0]);
+          }
+          consoleTabs.innerHTML += str;
+
+        }
+        document.getElementById("tab-content-console-pre-compilation-results").textContent = data.fullText;
+        document.getElementById("tab-content-console-compilation-results").scrollTop = document.getElementById("tab-content-console-compilation-results").scrollHeight;
+      }
+      prevDiagnostics = data.diagnostics;
+      if (!data.diagnostics) {
+        console.log(data.diagnostics);
+
+        dataLayer.push({
+          'event': 'responses',
+          'eventCategory': 'ide',
+          'eventAction': 'compilation-result',
+          'compilationResult': 'pass'
+        });
+
+        return;
+      } else {
+        dataLayer.push({
+          'event': 'responses',
+          'eventCategory': 'ide',
+          'eventAction': 'compilation-result',
+          'compilationResult': 'error'
+        });
+      }
+      var groupedByFiles = data.diagnostics.reduce(function(map, currentDiagnostic) {
+
+        if (!map[currentDiagnostic.fileName]) {
+          map[currentDiagnostic.fileName] = [];
+        }
+        map[currentDiagnostic.fileName].push(currentDiagnostic);
+        return map;
+      }, {});
+      for (var fileName in groupedByFiles) {
+        if (groupedByFiles.hasOwnProperty(fileName)) {
+          tabbedPane.showCompilationErrors(fileName, groupedByFiles[fileName]);
+        }
+      }
+    });
+    socket.on('update-sharing-settings-result', function(data) {
+      console.log(data);
+      console.log(data.reason);
+      console.log(data.current_status);
+      if (data.reason !== 'SUCCESS' || data.current_status !== 'PUBLIC') {
+        return;
+      }
+      var iframemsg = escapeHtml('<iframe src="https://www.codiva.io/em/p/b3ea32ca-bdc1-4f16-a104-99a7e40046e6" style="height: 600px; min-height: 420px; max-height: 90vh; width: 100%; overflow: hidden;"></iframe>');
+      var msg = `This project is now PUBLIC. Share this link\n
+https://www.codiva.io/p/b3ea32ca-bdc1-4f16-a104-99a7e40046e6
+Or to embed in other sites, copy paste this code.
+
+${iframemsg}
+
+`;
+
+      //var response = JSON.parse(data);
+      var lastRunId = "sharesettings";
+      var str = `<li id="tab-console-li${lastRunId}" class="console-tab">                                     
+          <input type="radio" class="tab-radio" name="console-tabs" id="tab-console${lastRunId}" checked/>
+          <label for="tab-console${lastRunId}">Sharing status</label>
+          <div class="tab-content" id="tab-content-console${lastRunId}">       
+            <pre id="tab-content-console-pre${lastRunId}">${msg}</pre>               
+            <div id="tab-content-console-input${lastRunId}" class="console-input-div">
+            </div>
+          </div>
+
+        </li>`;
+
+      var consoleTabs = document.getElementById("console_tabs_ul");
+      var items = consoleTabs.getElementsByTagName('li');
+      if (items.length >= 5) {
+        consoleTabs.removeChild(items[0]);
+      }
+      consoleTabs.innerHTML += str;
+
+    });
+
+    socket.on('run-response', function(data) {
+      console.log('run-response');
+      console.log(data);
+      var response = JSON.parse(data);
+      var errorText = "";
+      errorText += response.stderr ? response.stderr : "";
+      errorText += response.stdout ? response.stdout : "";
+
+      errorText += (response.exitCode === -1) ? "" : "\nCompleted with exit code: " + response.exitCode + "\n";
+
+      var preElement = document.getElementById("tab-content-console-pre" + response.runId);
+      if (!preElement) {
+        return;
+      }
+      document.getElementById("tab-content-console-pre" + response.runId).textContent += errorText;
+      document.getElementById("tab-content-console" + response.runId).scrollTop = document.getElementById("tab-content-console" + response.runId).scrollHeight;
+
+    });
+
+    var nextConsoleLabelId = 1;
+    socket.on('program-started', function(data) {
+      console.log('program-started : ' + data);
+      lastRunId = data.runId;
+      var showHideReminderClass = "";
+      /*if (chosenVariation === 0) {
+        console.log('Hiding consoleReminder');
+         showHideReminderClass = "hideElement";
+      } else {
+        console.log('Showing consoleReminder');
+      }*/
+
+      var str = `<li id="tab-console-li${lastRunId}" class="console-tab">
+          <input type="radio" class="tab-radio" name="console-tabs" id="tab-console${lastRunId}" checked/>
+          <label for="tab-console${lastRunId}">Console ${nextConsoleLabelId}</label>
+          <button onclick="closeConsoleTab('tab-console-li${lastRunId}')">✖</button>
+          <div class="tab-content" id="tab-content-console${lastRunId}">
+            
+              <!-- Registered user, no tips needed -->
+            
+            <pre id="tab-content-console-pre${lastRunId}"></pre>
+            <div id="tab-content-console-input${lastRunId}" class="console-input-div">
+<form id="consoleInputform${lastRunId}" onsubmit="return sendConsoleInput('${lastRunId}')">
+    <input type="text" id="consoleInput${lastRunId}" style="
+margin-left: -5px;padding-left: 10px;width: calc(100% - 100px);">
+    <input type="submit" name="consoleInputSend" id="consoleInputSend${lastRunId}" value="Enter" style="">
+</form>
+            </div>
+          </div>
+
+        </li>`;
+
+      //document.getElementById("tab-content-console-pre1").textContent = str;
+      var consoleTabs = document.getElementById("console_tabs_ul");
+      var items = consoleTabs.getElementsByTagName('li');
+      if (items.length >= 5) {
+        consoleTabs.removeChild(items[0]);
+      }
+      consoleTabs.innerHTML += str;
+      nextConsoleLabelId++;
+      /*
+      if (chosenVariation === 0) {
+      } else {
+        console.log('Showing consoleReminder');
+      }*/
+    });
+
+    setupHandlers(handlers, socket);
+    setupUiEventHandlers(tabbedPane, base, socket, projectId);
+    setupModel(model, handlers, socket);
+    console.log("Trying to call onFilesTreeFunction");
+    onFilesTreeFunction(folderData);
+    
+    loadJavaScriptAsync("/js/autocomplete.js");
+    
+    console.log('Loaded');
+  }
+
+  function closeConsoleTab(tabId) {
+    var tabLiElement = document.getElementById(tabId);
+    if (!tabLiElement) {
+      return;
+    }
+    tabLiElement.parentNode.removeChild(tabLiElement);
+  }
+
+  function sendConsoleInput(runId) {
+    console.log("Sending console input for " + runId);
+
+    var text = document.getElementById('consoleInput' + runId).value;
+    globalSocket.emit('stdin', { 'runId': runId, 'text': text });
+    document.getElementById('consoleInput' + runId).value = "";
+    document.getElementById("tab-content-console-pre" + runId).textContent += text + '\n';
+    document.getElementById("tab-content-console" + runId).scrollTop = document.getElementById("tab-content-console" + runId).scrollHeight;
+
+
+    return false;
+  }
+
+  function runMacro(macroName) {
+    globalSocket.emit('clickMacro', { 'macroName': macroName });
+  }
+
+  function setupModel(model, handlers, socket) {
+    // setup the model class that maintains the common data
+    let isReadOnly = false;
+    console.log("init model object1");
+    model.lang = "";
+    model.java = {};
+    model.c = {};
+    model.cpp = {};
+
+    model.java.moduleNames = new Set();
+    model.java.modules = new Map();
+    model.java.packageNames = new Set();
+    model.java.hasJavaFilesWithoutModule = false;
+    model.dirPrefixes = new Set();
+
+    model.updateFilesTree = function(folderData) {
+      if (isReadOnly) {
+        console.log("Model not required for readonly projects.");
+        return;
+      }
+      var dirDataListOptionsHtml = '';
+      var javaModuleNamesDataListOptionsHtml = '';
+      var javaPackageNamesDataListOptionsHtml = '';
+      var defaultDirectory = '';
+
+      function processFolderData(prefix, dirName, subFolders, hasModule) {
+        if (!model.dirPrefixes.has(prefix)) {
+          dirDataListOptionsHtml += '<option value="' + prefix + '/" />';
+          model.dirPrefixes.add(prefix);
+        }
+        for (let i = 0; subFolders && i < subFolders.length; i++) {
+          let subDir = subFolders[i];
+          let hasModuleInfoFile = false;
+          let hasJavaFile = false;
+          let packageName = "";
+          for (let j = 0; subDir.files && j < subDir.files.length; j++) {
+            let file = subDir.files[j];
+            console.log("prefix: " + prefix + ", dir: " + subDir.displayName + ", file: ", file);
+            if (prefix === "src" && file.displayName === 'module-info.java' && !model.java.moduleNames.has(file.displayName)) {
+              javaModuleNamesDataListOptionsHtml += '<option value="' + subDir.displayName + '" />\n';
+              model.java.moduleNames.add(subDir.displayName);
+              hasModuleInfoFile = true;
+            }
+            if (file.displayName && file.displayName.endsWith(".java")) {
+              hasJavaFile = true;
+              model.lang = "java";
+              defaultDirectory = prefix + '/' + subDir.displayName;
+            }
+          }
+
+          if (hasJavaFile && hasModuleInfoFile) {
+            // module should not have top level java files
+          } else if (hasJavaFile && !hasModuleInfoFile && !hasModule) {
+            // no module
+            let mergedName = prefix + '/' + subDir.displayName;
+            packageName = mergedName.split('/').splice(1).join('.');
+            model.java.hasJavaFilesWithoutModule = true;
+          } else if (hasJavaFile && !hasModuleInfoFile && hasModule) {
+            // within package inside a module
+            let mergedName = prefix + '/' + subDir.displayName;
+            packageName = mergedName.split('/').splice(2).join('.');
+          }
+          if (packageName !== "" && !model.java.packageNames.has(packageName)) {
+            javaPackageNamesDataListOptionsHtml += '<option value="' + packageName + '" />\n';
+            model.java.packageNames.add(packageName);
+          }
+          processFolderData(prefix + '/' + subDir.displayName, subDir.displayName, subDir.subFolders, hasModule || hasModuleInfoFile);
+        }
+      }
+      console.log('Updating files tree');
+      for (var i = 0; folderData.subFolders && i < folderData.subFolders.length; i++) {
+        var subDir = folderData.subFolders[i];
+        if (subDir.displayName === 'src' || subDir.displayName === 'test') {
+          for (let j = 0; subDir.files && j < subDir.files.length; j++) {
+            let file = subDir.files[j];
+            if (file.displayName && file.displayName.endsWith(".java")) {
+              model.lang = "java";
+              model.java.hasJavaFilesWithoutModule = true;
+            }
+
+          }
+          console.log(subDir);
+          processFolderData(subDir.displayName, subDir.displayName, subDir.subFolders, false);
+        }
+      }
+      console.log('model:', model);
+      console.log('dirDataListOptionsHtml: ', dirDataListOptionsHtml);
+      console.log('javaModuleNamesDataListOptionsHtml: ', javaModuleNamesDataListOptionsHtml);
+      console.log('javaPackageNamesDataListOptionsHtml: ', javaPackageNamesDataListOptionsHtml);
+      console.log('defaultDirectory: ', defaultDirectory);
+      document.getElementById('directoryList').innerHTML = dirDataListOptionsHtml;
+      document.getElementById('packageNameList').innerHTML = javaPackageNamesDataListOptionsHtml;
+      document.getElementById('moduleNameList').innerHTML = javaModuleNamesDataListOptionsHtml;
+      if (defaultDirectory !== "") {
+        document.getElementById('text-directory').value = defaultDirectory;
+      }
+    };
+  }
+
+  function setupHandlers(handlers, socket) {
+    // setup callbacks for the UI to trigger updating the server.
+    handlers.ready = true;
+    handlers.createNewFile = function(fileName, options) {
+      if (fileName.startsWith('~/src/') && model.java && model.java.moduleNames) {
+        console.log("createNewFile starts with src");
+        var res = fileName.split("/");
+        if (res.length >= 3) {
+          var moduleName = res[2];
+          if (model.java.moduleNames.has(moduleName)) {
+            console.log("moduleName: " + moduleName);
+            options.moduleName = moduleName;
+          } else {
+            console.log("No existing module, moduleName " + moduleName);
+          }
+
+        }
+      }
+      socket.emit('create-file', { 'fileName': fileName, 'options': options });
+    };
+    handlers.createNewFolder = function() {};
+    handlers.deleteFile = function(fileName) {
+      console.log("Trying to deletefile : " + fileName);
+      socket.emit("delete-file", { 'fileName': fileName });
+    };
+
+    handlers.deleteFolder = function() {};
+    handlers.renameFile = function(fileId) {
+      console.log("Trying to renamefile : " + fileId);
+      var fileTextBox = document.getElementById("file-newname-" + fileId);
+      if (!fileTextBox) {
+        return;
+      }
+      console.log(fileTextBox.value);
+      console.log(fileTextBox.dataset);
+      console.log(fileTextBox.dataset.basepath);
+      console.log(fileTextBox.dataset.filename);
+
+      socket.emit('rename-file', { 'newFileName': fileTextBox.dataset.basepath + "/" + fileTextBox.value, 'oldFileName': fileTextBox.dataset.basepath + "/" + fileTextBox.dataset.filename, 'oldFileId': fileId });
+      console.log('sent rename-file request to server');
+    };
+    handlers.renameFolder = function() {};
+    handlers.onFileChanged = function(fileName, contents) {
+      console.log('Sending update-file: ' + fileName);
+      var timeStamp = Math.floor(Date.now());
+      console.log('Sending update-file timestamp : ' + timeStamp);
+      socket.emit('update-file', { 'fileName': fileName, 'contents': contents });
+      //ga('send', 'event', 'ide', 'update-file');
+      console.log('Sent update-file event');
+      dataLayer.push({
+        'event': 'update-file',
+        'eventCategory': 'ide',
+        'eventAction': 'update-file',
+      });
+
+    };
+    handlers.onFileOpened = function(fileName) {
+      console.log('Sending file-opened: ' + fileName);
+      socket.emit('file-opened', { 'fileName': fileName });
+    };
+    handlers.showEditFileDialog = function() {
+      console.log('Edit file button clicked');
+    };
+  }
+
+  function setupUiEventHandlers(tabbedPane, base, socket, projectId) {
+
+    console.log('Adding onclick to button-run');
+    document.getElementById('run').onclick = function() {
+      console.log('Active Tab path: ' + tabbedPane.activeTabPath);
+      console.log(tabbedPane);
+      if (tabbedPane.activeTabPath) {
+        if (prevDiagnostics) {
+          var hasError = prevDiagnostics.reduce(function(init, diag) {
+            return init || (diag.kind === 1) || (diag.kind === "ERROR");
+          }, false);
+          console.log('hasError: ' + hasError);
+          if (hasError) {
+            var confirmation = confirm('There are compilation errors. Run previous working version?');
+            if (!confirmation) {
+              return;
+            }
+          }
+        }
+        socket.emit('run', { 'fileName': tabbedPane.activeTabPath, 'now': Date.now(), 'clientTime': (new Date()).toUTCString() });
+        document.getElementById('consoletoggle').checked = true;
+        ga('send', 'event', 'ide', 'run');
+      }
+    };
+
+    if (document.getElementById('newFileForm') !== null) {
+      document.getElementById('newFileForm').onsubmit = function() {
+        var fileName = document.getElementById('text-fileName').value;
+        var directory = document.getElementById('text-directory').value;
+        console.log('directory : ' + directory);
+        console.log('fileName : ' + fileName);
+        if (/^[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/.test(fileName)) {
+          console.log("valid filename");
+        } else {
+          console.log("invalid filename : " + fileName);
+          document.getElementById('text-fileName').focus();
+          return false;
+        }
+        if (fileName.indexOf('.') === -1) {
+          fileName += '.java'
+        }
+        base.createNewFile(directory, fileName);
+        return false;
+      }
+    }
+
+    if (document.getElementById('cloneButton') !== null) {
+      document.getElementById('cloneButton').onclick = function() {
+        console.log('cloneButton clicked: projectId : ' + projectId);
+        if (projectId) {
+          document.getElementById('cloneProjectId').value = projectId;
+        } else {
+          document.getElementById('cloneProjectId').value = 'empty0';
+        }
+        document.getElementById('cloneForm').submit();
+        return false;
+      }
+    }
+    var sharetoggle = document.getElementById('sharetoggle');
+    if (sharetoggle !== null) {
+      sharetoggle.onclick = function() {
+        socket.emit('update-sharing-settings', { 'isShared': sharetoggle.checked });
+        if (sharetoggle.checked) {
+          document.getElementById('sharetogglelabel').innerHTML = 'Unshare';
+        } else {
+          document.getElementById('sharetogglelabel').innerHTML = 'Share';
+        }
+      }
+    }
+  }
+
+  // We need these elements to handle all of the events from the resize dragging.
+  const resizer = document.getElementById('dragMe');
+  const consoleElement = document.getElementById('console');
+  const workbenchElement = document.getElementById('workbench');
+  const fileexplorerElement = document.getElementById('fileexplorer');
+  const codeMirrorElements = document.getElementsByClassName('CodeMirror');
+
+  // Handle the mousedown event
+  // that's triggered when user drags the resizer
+  const mouseDownHandler = function(e) {
+      console.log(document.body.style.cursor);
+
+      // Make it so that we dont select text in these divs.
+      consoleElement.style.userSelect = 'none';
+      consoleElement.style.pointerEvents = 'none';
+
+      workbenchElement.style.userSelect = 'none';
+      workbenchElement.style.pointerEvents = 'none';
+
+      document.addEventListener('mousemove', mouseMoveHandler);
+      document.addEventListener('mouseup', mouseUpHandler);
+  };
+
+  const mouseMoveHandler = function(e) {
+      // Update the codemirror editor for all tabs.
+      let windowHeight = window.innerHeight;
+      const minConsoleHeight = 0.2;
+      const minEditorHeight = 0.2;
+
+      newConsoleHeight = consoleElement.getBoundingClientRect().bottom - e.clientY - 10
+      newEditorHeight = e.clientY - 10 - workbenchElement.getBoundingClientRect().top;
+
+      if (newEditorHeight/windowHeight < minEditorHeight || newConsoleHeight/windowHeight < minConsoleHeight) {
+        return;
+      }
+      for (let i = 0; i < codeMirrorElements.length; i ++ ) {
+        codeMirrorElements[i].style.height = (e.clientY - 10 - codeMirrorElements[i].getBoundingClientRect().top).toString() + "px";
+      }
+      workbenchElement.style.height = (newEditorHeight).toString() + "px";
+      fileexplorerElement.style.height = (e.clientY - fileexplorerElement.getBoundingClientRect().top).toString() + "px";
+      consoleElement.style.height = (newConsoleHeight).toString() + "px";
+      consoleElement.style.top = (e.clientY + 10).toString() + "px";
+  };
+
+  const mouseUpHandler = function() {
+
+    consoleElement.style.removeProperty('user-select');
+    consoleElement.style.removeProperty('pointer-events');
+
+    workbenchElement.style.removeProperty('user-select');
+    workbenchElement.style.removeProperty('pointer-events');
+
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
+  };
+
+  // Attach the handler
+  resizer.addEventListener('mousedown', mouseDownHandler);
+
+  window.addEventListener('load', onLoad);
+  window.addEventListener('DOMContentLoaded', onDOMContentLoaded);
+  </script>
+  <!--Start of Tawk.to Script-->
+  <!--
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/578ac7fdc9a9fefa7910ac7d/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+-->
+  <!--End of Tawk.to Script-->
+  <!-- Appzi: Capture Insightful Feedback -->
+  <script async src="https://w.appzi.io/w.js?token=dZ2VM"></script>
+  <!-- End Appzi -->
+</body>
+
+</html>
